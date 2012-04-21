@@ -5,15 +5,27 @@
 %Size of the VectorField in all axis
 vf.size = 50;
 %Number of thermals to generate
-vf.nt = 4;
+vf.nt = 0;
+vf.nw = 1;
 vf.detail = 1;
 [vf.x vf.y vf.z] = meshgrid(1:vf.size,1:vf.size,1:vf.size);
 
 t_height = 30; 
 %Random positions for 4 thermals
-t_xy = randi([-40 40],2,vf.nt);
+t_xy = randi([0 40],2,vf.nt);
 %Random raius for thermals
 t_r = randi([-2 2],1,4) + 10;
+
+%%--WAVES--%%
+%Width
+w_w = 10;
+%Height
+w_h = 20;
+%Depth
+w_d = 15;
+%Determine bottom left corner of vector
+w_xy = randi([0 40],2,vf.nw);
+
 
 %Initial Wind
 for x = 1:vf.detail:vf.size
@@ -24,9 +36,9 @@ for x = 1:vf.detail:vf.size
 			    v = 0;%Y Component
 			    w = randi([-10 10],1,1);%Z Component
             else
-            	u = vf.u(x,y,z-1) + randi([-1 1],1,1);
-            	v = vf.v(x,y,z-1) + randi([-10 10],1,1);
-            	w = vf.w(x,y,z-1) + randi([-1 1],1,1);
+            	u = vf.u(x,y,z-1);% + randi([-1 1],1,1);
+            	v = vf.v(x,y,z-1);% + randi([-10 10],1,1);
+            	w = vf.w(x,y,z-1);% + randi([-1 1],1,1);
             end
             vf.u(x,y,z)=u;
             vf.v(x,y,z)=v;
@@ -43,9 +55,27 @@ for x = 1:vf.detail:vf.size
                     vf.w(x,y,z) = vf.w(x,y,z) - 4;
                 end
             end
+
+            %%--WAVES--%%
+            for t = 1:vf.nw
+	            %Positive top left origin
+                xy = w_xy(:,t);
+                for w = 1:w_w
+    	            for h = 1:w_h
+    		            for d = 1:w_d
+    			            theta = (1/4)*pi*(h);
+    			            theta = mod(theta,2*pi);
+    			            vf.w(x,y,z) = vf.w(x,y,z)+sin(theta);
+                        end
+                    end
+                end
+            end
         end
     end
 end
+
+
+
 
 
 
