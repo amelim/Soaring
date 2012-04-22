@@ -6,7 +6,7 @@
 vf.size = 50;
 %Number of thermals to generate
 vf.nt = 0;
-vf.nw = 0;
+vf.nw = 1;
 vf.detail = 1;
 [vf.x vf.y vf.z] = meshgrid(1:vf.size,1:vf.size,1:vf.size);
 
@@ -18,19 +18,20 @@ t_r = randi([-2 2],1,4) + 10;
 
 %%--WAVES--%%
 %Width
-w_w = 10;
+w_w = 20;
 %Height
 w_h = 20;
 %Depth
-w_d = 15;
+w_d = 5;
 %Determine bottom left corner of vector
-w_xy = randi([0 40],2,vf.nw);
+w_xy = randi([20 40],2,vf.nw)
 
 
 %Initial Wind
 for x = 1:vf.detail:vf.size
 	for y = 1:vf.detail:vf.size
 		for z = 1:vf.detail:vf.size
+			%Initial Values
 			if z==1
 			    u = 100; %X Component
 			    v = 0;%Y Component
@@ -63,9 +64,9 @@ for x = 1:vf.detail:vf.size
                 if(x >= xy(1) & x < xy(1)+w_w)
                     if(y >= xy(2) & x < xy(2)+w_h)
     		            for d = 1:w_d
-    			            theta = (1/4)*pi*(h);
+    			            theta = (1/4)*pi*(y);
     			            theta = mod(theta,2*pi);
-    			            vf.w(x,y,z) = vf.w(x,y,z)+sin(theta)*10;
+    			            vf.w(x,y,z) = vf.w(x,y,z)+sin(theta)*5;
                         end
                     end
                 end
