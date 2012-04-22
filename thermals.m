@@ -3,21 +3,21 @@
 
 
 %Size of the VectorField in all axis
-vf.size = 50;
+vf.size = 150;
 %Number of thermals to generate
-vf.nt = 0;
+vf.nt = 5;
 %Number of waves
-vf.nw = 0;
+vf.nw = 1;
 %Number of bubbles
-vf.nb = 1;
+vf.nb = 2;
 vf.detail = 1;
 [vf.x vf.y vf.z] = meshgrid(1:vf.size,1:vf.size,1:vf.size);
 
 t_height = 30; 
 %Random positions for 4 thermals
-t_xy = randi([0 40],2,vf.nt);
+t_xy = randi([0 vf.size],2,vf.nt);
 %Random raius for thermals
-t_r = randi([-2 2],1,4) + 10;
+t_r = randi([-2 2],1,vf.nt) + 10;
 
 %%--WAVES--%%
 %Width
@@ -27,11 +27,11 @@ w_h = 20;
 %Depth
 w_d = 5;
 %Determine bottom left corner of vector
-w_xy = randi([20 40],2,vf.nw)
+w_xy = randi([0 vf.size],2,vf.nw)
 
 
 %%--BUBBLES--%%
-b_xy = randi([0 40],3,vf.nb);
+b_xy = randi([0 vf.size],3,vf.nb);
 b_r = 10;
 
 
@@ -98,7 +98,7 @@ end
 
 hold on;
 
-[sx sy sz] = meshgrid(1,1:5:50,1:5:50);
+[sx sy sz] = meshgrid(1,1:10:vf.size,1:10:vf.size);
 hlines = streamline(stream3(vf.x,vf.y,vf.z,vf.u,vf.v,vf.w,sx,sy,sz));
 %[verts averts] = streamslice(vf.u, vf.v, vf.w, [], [], [5]);
 
