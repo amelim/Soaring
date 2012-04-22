@@ -6,7 +6,7 @@
 vf.size = 50;
 %Number of thermals to generate
 vf.nt = 0;
-vf.nw = 1;
+vf.nw = 0;
 vf.detail = 1;
 [vf.x vf.y vf.z] = meshgrid(1:vf.size,1:vf.size,1:vf.size);
 
@@ -34,7 +34,7 @@ for x = 1:vf.detail:vf.size
 			if z==1
 			    u = 100; %X Component
 			    v = 0;%Y Component
-			    w = randi([-10 10],1,1);%Z Component
+			    w = 0;%randi([-10 10],1,1);%Z Component
             else
             	u = vf.u(x,y,z-1);% + randi([-1 1],1,1);
             	v = vf.v(x,y,z-1);% + randi([-10 10],1,1);
@@ -60,12 +60,12 @@ for x = 1:vf.detail:vf.size
             for t = 1:vf.nw
 	            %Positive top left origin
                 xy = w_xy(:,t);
-                for w = 1:w_w
-    	            for h = 1:w_h
+                if(x >= xy(1) & x < xy(1)+w_w)
+                    if(y >= xy(2) & x < xy(2)+w_h)
     		            for d = 1:w_d
     			            theta = (1/4)*pi*(h);
     			            theta = mod(theta,2*pi);
-    			            vf.w(x,y,z) = vf.w(x,y,z)+sin(theta);
+    			            vf.w(x,y,z) = vf.w(x,y,z)+sin(theta)*10;
                         end
                     end
                 end
