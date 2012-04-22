@@ -6,7 +6,10 @@
 vf.size = 50;
 %Number of thermals to generate
 vf.nt = 0;
-vf.nw = 1;
+%Number of waves
+vf.nw = 0;
+%Number of bubbles
+vf.nb = 1;
 vf.detail = 1;
 [vf.x vf.y vf.z] = meshgrid(1:vf.size,1:vf.size,1:vf.size);
 
@@ -25,6 +28,11 @@ w_h = 20;
 w_d = 5;
 %Determine bottom left corner of vector
 w_xy = randi([20 40],2,vf.nw)
+
+
+%%--BUBBLES--%%
+b_xy = randi([0 40],3,vf.nb);
+b_r = 10;
 
 
 %Initial Wind
@@ -69,6 +77,14 @@ for x = 1:vf.detail:vf.size
     			            vf.w(x,y,z) = vf.w(x,y,z)+sin(theta)*5;
                         end
                     end
+                end
+            end
+            %%--BUBBLES--%%
+            for t = 1:vf.nb
+                xy = b_xy(:,t);
+                dxy = sqrt((xy(1)-x).^2 + (xy(2)-y).^2 + (xy(3)-z).^2);
+                if(dxy < b_r)
+                    vf.w(x,y,z) = vf.w(x,y,z) + 5;
                 end
             end
         end
