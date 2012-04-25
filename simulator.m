@@ -1,6 +1,6 @@
-x_init = [0,0,-100,3.6,0,0,pi/2,0];
+x_init = [0,0,-100,10,0,0,pi/2,0];
 
-[T,Y] = ode45(@dynamics, [0,100], x_init);
+[T,Y] = ode45(@dynamics, [0,1000], x_init);
 
 subplot(2,2,1);
 plot(Y(:,1),Y(:,2));
@@ -11,7 +11,7 @@ plot(T, -Y(:,3));
 title('z Motion of Glider');
 
 subplot(2,2,3);
-plot(T,Y(:,4),T,Y(:,5),T,Y(:,6));
+plot(T,Y(:,4),T,Y(:,5),T,-Y(:,6));
 title('Velocity of Glider');
 legend('V_x','V_y','V_z');
 

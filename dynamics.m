@@ -26,21 +26,23 @@ vz = x(6);
 gp = x(7); % glidepath
 hd = x(8); % heading
 
-va = sqrt(vx^2 + vy^2 + vz^2); % airspeed
+va = sqrt(vx^2 + vy^2); % airspeed
 
 lift = 0.5*d_a*(va^2)*a_w*c_l;
-drag_x = 0.5*d_a*(va^2)*a_c*c_d*cos(hd);
-drag_y = 0.5*d_a*(va^2)*a_c*c_d*sin(hd);
+drag_x = 0.5*d_a*(vx^2)*a_c*c_d;
+drag_y = 0.5*d_a*(vy^2)*a_c*c_d;
+drag_z = 0.5*d_a*(vz^2)*a_c*c_d;
 
 px_dot = vx;
 py_dot = vy;
 pz_dot = vz;
-vx_dot = m*g*cos(gp)*cos(hd) - drag_x;
-vy_dot = m*g*cos(gp)*sin(hd) - drag_y;
-vz_dot = m*g*sin(gp) - u_thermal - lift;
+vx_dot = g*cos(gp)*cos(hd) - sign(vx)*drag_x/m;
+vy_dot = g*cos(gp)*sin(hd) - sign(vy)*drag_y/m;
+vz_dot = g*sin(gp) - u_thermal/m - sign(vz)*drag_z/m - lift/m;
 
-E = 0.5*(vx^2 + vy^2 + vz^2) + g*pz;
-Edot = 0.5*(vx^2 + vy^2 + vz^2)*(vx_dot^2 + vy_dot^2 + vz_dot^2) + g*vz;
+E = 0.5*m*(vx^2 + vy^2 + vz^2) - g*m*pz; % z is down!
+Edot = m*(vx*vx_dot + vy*vy_dot + vz*vz_dot) - g*m*vz;
+
 
 gp_dot = u_pitch;
 hd_dot  = u_roll;
