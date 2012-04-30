@@ -4,7 +4,7 @@ mass = 1.0;
 vf = thermals;
 
 %Vector field structure requires inital condition x/y to be non-zero
-x_init = [1,50,-init_height,init_vx,0,0,pi/2,0, 9.8*mass*init_height];
+x_init = [1,50,-init_height,init_vx,0,0,pi/2,0, 9.8*mass*init_height,0,0];
 
 [T,Y] = ode45(@dynamics, [0,100], x_init, [], vf);
 
