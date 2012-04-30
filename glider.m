@@ -10,5 +10,4 @@ function xdot = glider(t, x)
             va*cos(gamma)*sin(phi)+wy;
             va*sin(gamma)+wz];
 
-
 end

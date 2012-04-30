@@ -1,16 +1,17 @@
 init_vx = 4;
-init_height = 100;
+init_height = 60;
 mass = 1.0;
+vf = thermals;
 
+%Vector field structure requires inital condition x/y to be non-zero
+x_init = [1,50,-init_height,init_vx,0,0,pi/2,0, 9.8*mass*init_height];
 
-x_init = [0,0,-init_height,init_vx,0,0,pi/2,0, 9.8*mass*init_height];
-
-[T,Y] = ode45(@dynamics, [0,100], x_init);
+[T,Y] = ode45(@dynamics, [0,100], x_init, [], vf);
 
 
 subplot(2,2,1);
-plot(Y(:,1),Y(:,2));
-title('(x,y) Motion of Glider');
+plot3(Y(:,1),Y(:,2),-Y(:,3));
+title('(x,y,z) Motion of Glider');
 
 subplot(2,2,2);
 plot(T, -Y(:,3));

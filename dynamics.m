@@ -1,4 +1,4 @@
-function xdot = dynamics(t,x)
+function xdot = dynamics(t,x, vf)
 
 % inputs: pitch, roll, thrust and thermals
 % currently not using thrust in any way
@@ -26,6 +26,16 @@ vz = x(6);
 gp = x(7); % glidepath
 hd = x(8); % heading
 energy = x(9);
+
+%Vector field access requires integers, so we round
+pz
+try
+if pz <= 0
+    u_thermal = vf.w(round(px),round(py),-round(pz))
+else
+	u_thermal = 0;
+end
+end
 
 va = sqrt(vx^2 + vy^2); % airspeed
 
