@@ -18,11 +18,11 @@ a_c = 0.05; % cross sectional area
 m = 1; % mass, another easy number
 
 % extremum constants
-k = .05; % end scaling factor
-w = 1; % period of perturbation
-w_l = .05; % low pass
-w_h = 1; % high pass
-a = .05; % amplitude of perturbation
+k = 1; % end scaling factor, best=1
+w = 1.25; % period of perturbation, best=1
+w_l = 1; % low pass, best=1 or 0.5
+w_h = .5; % high pass, best=0.5
+a = .1; % amplitude of perturbation, best=0.1
 
 % x forward, y left, z down
 px = x(1);
